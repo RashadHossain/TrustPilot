@@ -1,0 +1,8 @@
+SERVICE_NAME: ${self:custom.serviceName}
+TRUSTPILOT_API_KEY: ${ssm:${self:custom.serviceName}-TRUSTPILOT_API_KEY}
+TRUSTPILOT_SECRET: ${ssm:${self:custom.serviceName}-TRUSTPILOT_SECRET}
+TRUSTPILOT_BUSINESS_UNIT_ID: ${ssm:${self:custom.serviceName}-TRUSTPILOT_BUSINESS_UNIT_ID}
+TRUSTPILOT_BASE_URL: ${ssm:${self:custom.serviceName}-TRUSTPILOT_BASE_URL}
+TRUSTPILOT_INVITATIONS_URL: ${ssm:${self:custom.serviceName}-TRUSTPILOT_INVITATIONS_URL}
+TRUSTPILOT_REDIRECT_URI: ${ssm:${self:custom.serviceName}-TRUSTPILOT_REDIRECT_URI}
+SHOPIFY_SECRET: ${ssm:${self:custom.serviceName}-SHOPIFY_SECRET}

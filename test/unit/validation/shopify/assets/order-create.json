@@ -1,0 +1,7 @@
+{
+  "headers": {
+    "x-shopify-hmac-sha256": "+eZuF5tnR65UEI+C+K3os8Jddv0wr95sOVgixTAZYWk=",
+    "x-shopify-topic": "orders/create"
+  },
+  "body": ""
+}

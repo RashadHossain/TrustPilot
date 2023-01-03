@@ -1,0 +1,24 @@
+app: ryzeup-serverless
+org: ryze
+service: ${self:custom.serviceName}
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: ${opt:region, "eu-central-1"}
+  environment: ${file(./aws-env.yml)}
+
+custom:
+  serviceName: ryzeup-serverless
+
+functions:
+  order-create:
+    handler: src/handler/http/order-create.handler
+    events:
+      - httpApi:
+          path: /
+          method: post
+
+plugins:
+  - serverless-plugin-typescript
