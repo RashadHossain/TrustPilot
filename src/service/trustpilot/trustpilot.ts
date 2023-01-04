@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 import { TrustPilotClientConfiguration } from '../../types/trustpilot';
 
 class TrustPilotClient {
@@ -22,11 +23,12 @@ class TrustPilotClient {
 
     async authenticate(){
         try {
+            const data = {
+                grant_type: 'client_credentials'
+            }
             const response = await axios.post(
                 `${this.baseUrl}/v1/oauth/oauth-business-users-for-applications/accesstoken`,
-                {
-                    grant_type: 'client_credentials',
-                },
+                qs.stringify(data),
                 {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -42,7 +44,7 @@ class TrustPilotClient {
             }
             this.accessToken = response.data.access_token;
         } catch (error: any) {
-            console.error(error);
+            console.error(`authenticate error: ${error}`);
         }
 
         return this;
@@ -70,7 +72,7 @@ class TrustPilotClient {
             );
 
         } catch (error: any) {
-            console.error(error);
+            console.error(`createInvitation error: ${error}`);
         }
     };
 }
@@ -93,7 +95,6 @@ class TrustPilotClient {
         'invitationsUrl': TRUSTPILOT_INVITATIONS_URL ?? '',
         'redirectUri': TRUSTPILOT_REDIRECT_URI ?? ''
     }
-    console.log(config);
     return await new TrustPilotClient(config).authenticate();
 }
 

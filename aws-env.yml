@@ -6,3 +6,6 @@ TRUSTPILOT_BASE_URL: ${ssm:${self:custom.serviceName}-TRUSTPILOT_BASE_URL}
 TRUSTPILOT_INVITATIONS_URL: ${ssm:${self:custom.serviceName}-TRUSTPILOT_INVITATIONS_URL}
 TRUSTPILOT_REDIRECT_URI: ${ssm:${self:custom.serviceName}-TRUSTPILOT_REDIRECT_URI}
 SHOPIFY_SECRET: ${ssm:${self:custom.serviceName}-SHOPIFY_SECRET}
+GOOGLE_AUTH_PROJECT_ID: ${ssm:${self:custom.serviceName}-GOOGLE_AUTH_PROJECT_ID}
+GOOGLE_AUTH_PRIVATE_KEY: ${ssm:${self:custom.serviceName}-GOOGLE_AUTH_PRIVATE_KEY}
+GOOGLE_AUTH_CLIENT_EMAIL: ${ssm:${self:custom.serviceName}-GOOGLE_AUTH_CLIENT_EMAIL}

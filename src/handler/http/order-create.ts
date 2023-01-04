@@ -1,6 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import {shopifyVerify} from '../../../src/validation/shopify/shopify-verify';
-import {trustPilotClient} from "../../../src/service/trustpilot/trustpilot";
+import {shopifyVerify} from 'src/validation/shopify/shopify-verify';
+import {trustPilotClient} from "src/service/trustpilot/trustpilot";
+import {googleSheetsAdd} from "src/service/googleapis/googleapis";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -9,8 +10,6 @@ export const handler = async (
 ): Promise<APIGatewayProxyResult> => {
 
     try {
-        console.log(event.body);
-
         if (!event.body || !event.headers['x-shopify-topic'] || event.headers['x-shopify-topic'] !== 'orders/create') {
             return {
                 statusCode: 400,
@@ -51,6 +50,7 @@ export const handler = async (
 
         if(response?.data) {
             console.log(`Response invitation ${response.data.url}`);
+            await googleSheetsAdd(response.data.url);
         }
 
     } catch (e) {

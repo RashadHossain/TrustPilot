@@ -1,8 +1,10 @@
-import {google} from "googleapis";
+import { JWT } from 'google-auth-library';
+import { google } from 'googleapis';
 
-export const addItem = async (id: string, name: string) => {
-    // Set up the Google Sheets API client
+export async function googleSheetsAdd(test: string) {
+    try {
 
-
-
+    } catch (error: any) {
+        console.error(`googleSheetsAdd error: ${error}`);
+    }
 }
