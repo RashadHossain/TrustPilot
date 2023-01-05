@@ -38,19 +38,20 @@ export const handler = async (
         }
 
         const notification = JSON.parse(event.body);
-
+        const {order_number, customer} = notification;
         const client = await trustPilotClient();
+
         const params = {
-            "referenceId": notification.order_id,
-            "email": notification.customer.email,
-            "name": `${notification.customer.first_name} ${notification.customer.last_name}`,
+            "referenceId": order_number,
+            "email": customer.email,
+            "name": `${customer.first_name} ${customer.last_name}`,
             "locale": 'en-US'
         }
         const response = await client.createInvitation(params);
 
         if(response?.data) {
             console.log(`Response invitation ${response.data.url}`);
-            await googleSheetsAdd(response.data.url);
+            await googleSheetsAdd(customer.email, order_number, response.data.url);
         }
 
     } catch (e) {

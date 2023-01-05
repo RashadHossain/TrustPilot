@@ -56,8 +56,7 @@ class TrustPilotClient {
                 "referenceId": params.referenceId,
                 "email": params.email,
                 "name": params.name,
-                "locale": params.locale,
-                "redirectUri": this.redirectUri
+                "locale": params.locale
             }
 
             return await axios.post(
@@ -65,7 +64,8 @@ class TrustPilotClient {
                 data,
                 {
                     headers: {
-                        'Authorization': `Bearer ${this.accessToken}`
+                        'Authorization': `Bearer ${this.accessToken}`,
+                        'Content-Type': 'application/json',
                     },
 
                 }
