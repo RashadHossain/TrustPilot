@@ -10,6 +10,6 @@ GOOGLE_AUTH_PROJECT_ID: ${ssm:${self:custom.serviceName}-GOOGLE_AUTH_PROJECT_ID}
 GOOGLE_AUTH_PRIVATE_KEY: ${ssm:${self:custom.serviceName}-GOOGLE_AUTH_PRIVATE_KEY}
 GOOGLE_AUTH_CLIENT_EMAIL: ${ssm:${self:custom.serviceName}-GOOGLE_AUTH_CLIENT_EMAIL}
 GOOGLE_SHEET_ID: ${ssm:${self:custom.serviceName}-GOOGLE_SHEET_ID}
-AWS_API_KEY="${ssm:${self:custom.serviceName}-AWS_API_KEY}"
-AWS_SECRET_KEY="${ssm:${self:custom.serviceName}-AWS_SECRET_KEY}"
-AWS_BUCKET_NAME="${ssm:${self:custom.serviceName}-AWS_BUCKET_NAME}"
+AWS_API_KEY: ${ssm:${self:custom.serviceName}-AWS_API_KEY}
+AWS_SECRET_KEY: ${ssm:${self:custom.serviceName}-AWS_SECRET_KEY}
+AWS_BUCKET_NAME: ${ssm:${self:custom.serviceName}-AWS_BUCKET_NAME}
