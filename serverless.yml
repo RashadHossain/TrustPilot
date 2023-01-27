@@ -25,6 +25,10 @@ functions:
       - httpApi:
           path: /
           method: post
+  sheet-migrate:
+    handler: src/handler/schedule/sheet-migrate.handler
+    events:
+      - schedule: rate(3 days)
 
 plugins:
   - serverless-plugin-typescript

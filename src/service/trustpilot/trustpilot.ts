@@ -77,7 +77,7 @@ class TrustPilotClient {
     };
 }
 
- export async function trustPilotClient() {
+ export async function createTrustPilotClient() {
     const {
         TRUSTPILOT_API_KEY,
         TRUSTPILOT_SECRET,

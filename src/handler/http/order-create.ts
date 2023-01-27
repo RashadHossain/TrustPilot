@@ -1,7 +1,8 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import {shopifyVerify} from 'src/validation/shopify/shopify-verify';
-import {trustPilotClient} from "src/service/trustpilot/trustpilot";
-import {googleSheetsAdd} from "src/service/googleapis/googleapis";
+import {createTrustPilotClient} from "src/service/trustpilot/trustpilot";
+import {createGoogleSheetsClient} from "src/service/googleapis/sheets";
+import {SSM, AddTagsToResourceCommand} from "@aws-sdk/client-ssm";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -38,8 +39,8 @@ export const handler = async (
         }
 
         const notification = JSON.parse(event.body);
-        const {order_number, customer} = notification;
-        const client = await trustPilotClient();
+        const {order_number, customer, created_at} = notification;
+        const trustPilotClient = await createTrustPilotClient();
 
         const params = {
             "referenceId": order_number,
@@ -47,11 +48,14 @@ export const handler = async (
             "name": `${customer.first_name} ${customer.last_name}`,
             "locale": 'en-US'
         }
-        const response = await client.createInvitation(params);
+        const response = await trustPilotClient.createInvitation(params);
 
         if(response?.data) {
             console.log(`Response invitation ${response.data.url}`);
-            await googleSheetsAdd(customer.email, order_number, response.data.url);
+            const sheetClient = await createGoogleSheetsClient();
+            const addResponse = await sheetClient.googleSheetsAdd(customer.email, order_number, response.data.url, created_at);
+
+            console.log(addResponse);
         }
 
     } catch (e) {

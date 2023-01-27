@@ -11,6 +11,7 @@
   "author": "codewithlucas",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-ssm": "^3.245.0",
     "@googleapis/sheets": "^4.0.1",
     "axios": "^1.2.2",
     "dotenv": "^16.0.3",
