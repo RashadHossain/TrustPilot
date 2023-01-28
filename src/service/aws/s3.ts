@@ -7,13 +7,16 @@ class S3Client{
     private readonly bucketName;
     constructor() {
         const {
-            AWS_API_KEY,
-            AWS_SECRET_KEY,
+            AWS_BUCKET_API_KEY,
+            AWS_BUCKET_SECRET_KEY,
             AWS_BUCKET_NAME
         } = process.env;
+
+        console.log(AWS_BUCKET_API_KEY);
+        console.log(AWS_BUCKET_SECRET_KEY);
         this.s3 = new AWS.S3({
-            accessKeyId: AWS_API_KEY,
-            secretAccessKey: AWS_SECRET_KEY
+            accessKeyId: AWS_BUCKET_API_KEY,
+            secretAccessKey: AWS_BUCKET_SECRET_KEY
         });
         this.bucketName = AWS_BUCKET_NAME;
     }

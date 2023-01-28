@@ -88,11 +88,11 @@ class GoogleSheetsClient {
 
     async moveDataBetweenSheets(sheetIdMigrateFrom: string, sheetIdMigrateTo: string) {
         try {
-
             const data = await this.googleSheetsGetValues(sheetIdMigrateFrom);
             if(data) {
                 const values = data.data.values;
                 await this.googleSheetsUpdate(values, sheetIdMigrateTo);
+                console.log('Updated data');
                 await this.googleSheetsClear(sheetIdMigrateFrom);
                 await this.googleSheetsAppend(this.defaultColumns, sheetIdMigrateFrom);
             }
@@ -104,6 +104,7 @@ class GoogleSheetsClient {
 
     async googleSheetsClear(range: string) {
         try {
+            console.log(`Clearing ${range}`);
             await this.sheets.spreadsheets.values.clear({
                 spreadsheetId: this.sheetId,
                 range,

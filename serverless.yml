@@ -29,6 +29,7 @@ functions:
     handler: src/handler/schedule/sheet-migrate.handler
     events:
       - schedule: rate(3 days)
+    timeout: 120
 
 plugins:
   - serverless-plugin-typescript
