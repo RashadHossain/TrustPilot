@@ -55,7 +55,7 @@ export const handler = async (
             const sheetClient = await createGoogleSheetsClient();
             const addResponse = await sheetClient.googleSheetsAdd(customer.email, order_number, response.data.url, created_at);
 
-            console.log(addResponse);
+
         }
 
     } catch (e) {

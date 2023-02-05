@@ -12,8 +12,6 @@ class S3Client{
             AWS_BUCKET_NAME
         } = process.env;
 
-        console.log(AWS_BUCKET_API_KEY);
-        console.log(AWS_BUCKET_SECRET_KEY);
         this.s3 = new AWS.S3({
             accessKeyId: AWS_BUCKET_API_KEY,
             secretAccessKey: AWS_BUCKET_SECRET_KEY
