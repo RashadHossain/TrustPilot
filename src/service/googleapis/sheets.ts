@@ -145,7 +145,7 @@ class GoogleSheetsClient {
                 auth: this.client,
             };
             const response = await this.sheets.spreadsheets.batchUpdate(request);
-            console.log(response)
+
             console.log('success deletion')
 
             await this.sheets.spreadsheets.values.clear({
@@ -165,7 +165,7 @@ class GoogleSheetsClient {
             spreadsheetId: this.sheetId,
             range: 'Sheet1',
         });
-        console.log(res);
+
     } catch (error: any) {
         console.error(`googleSheetsAdd error: ${error}`);
     }
