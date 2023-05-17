@@ -50,7 +50,7 @@ class GoogleSheetsClient {
         const request = {
             spreadsheetId: this.sheetId,
             range: range,
-            insertDataOption: "INSERT_ROWS",
+            insertDataOption: "OVERWRITE",
             valueInputOption: 'USER_ENTERED',
             resource: requestBody,
             auth: this.client
@@ -105,6 +105,49 @@ class GoogleSheetsClient {
     async googleSheetsClear(range: string) {
         try {
             console.log(`Clearing ${range}`);
+
+            const sheetResponse = await this.sheets.spreadsheets.get({
+                spreadsheetId: this.sheetId,
+                auth: this.client,
+                ranges: [], // Specify an empty array to fetch only the sheet properties, not cell values
+                includeGridData: false, // Set to false to reduce response data size
+            });
+
+            const sheet = sheetResponse.data.sheets.find(
+                (sheet: { properties: { title: string } }) => sheet.properties.title === range
+            );
+            if (!sheet) {
+                console.error("Sheet not found");
+                return;
+            }
+            const rowCount = sheet.properties.gridProperties.rowCount;
+
+
+
+            const deleteRowsRequest = {
+                requests: [
+                    {
+                        deleteDimension: {
+                            range: {
+                                sheetId: sheet.properties.sheetId,
+                                dimension: "ROWS",
+                                startIndex: 1,
+                                endIndex: rowCount,
+                            },
+                        },
+                    },
+                ],
+            };
+            const request = {
+                // The spreadsheet to apply the updates to.
+                spreadsheetId: this.sheetId,
+                resource: deleteRowsRequest,
+                auth: this.client,
+            };
+            const response = await this.sheets.spreadsheets.batchUpdate(request);
+            console.log(response)
+            console.log('success deletion')
+
             await this.sheets.spreadsheets.values.clear({
                 spreadsheetId: this.sheetId,
                 range,
@@ -115,6 +158,7 @@ class GoogleSheetsClient {
     }
 
     }
+
 
     async getSheetPage(sheets: sheets_v4.Sheets) {
         const res = await sheets.spreadsheets.values.get({
@@ -141,6 +185,7 @@ export async function createGoogleSheetsClient() {
         'clientEmail': GOOGLE_AUTH_CLIENT_EMAIL ?? '',
         'sheetId': GOOGLE_SHEET_ID ?? ''
     }
+
     return await new GoogleSheetsClient(config).authenticate();
 }
 

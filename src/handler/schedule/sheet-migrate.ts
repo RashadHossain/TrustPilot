@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import * as dotenv from "dotenv";
-import {createGoogleSheetsClient} from "src/service/googleapis/sheets";
+import {createGoogleSheetsClient} from "../../service/googleapis/sheets";
 import {createS3Client} from "src/service/aws/s3";
 import {Readable} from "stream";
 dotenv.config();
@@ -10,9 +10,7 @@ export const handler = async (
 ): Promise<APIGatewayProxyResult> => {
 
     try {
-        console.log('Starting migration');
         const sheetClient = await createGoogleSheetsClient();
-        console.log('Client created')
         const lastPageResults = await sheetClient.googleSheetsGetValues('Sheet10');
         console.log('Google Sheets values retrieved')
         if(lastPageResults.data.values.length > 1) {
@@ -28,7 +26,6 @@ export const handler = async (
         for(let i=9;i>=1;i--) {
             console.log(`Migrating from Sheet${i} to Sheet${i+1}`);
             await sheetClient.moveDataBetweenSheets(`Sheet${i}`, `Sheet${i+1}`)
-            console.log(`Finished migrating from Sheet${i} to Sheet${i+1}`);
         }
 
         console.log('Migration finalized');
